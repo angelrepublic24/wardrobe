@@ -1,7 +1,12 @@
 import React from "react";
-import { TopOption } from "./topOption";
-import { BottomOption } from "./bottomOption";
-import { DoorOption } from "./doorOption";
+import { BaseSizeOption } from "./baseSizeOption";
+import { Louvers } from "./louvers";
+import { Drainage } from "./drainage";
+import { CanopySupport } from "./canopySupport";
+import { ColorOptions } from "./colorOptions";
+import { GlassRoom } from "./glassRoom";
+import { RoofingOptions } from "./roofingOptions";
+import { SlotOptions } from "./slotOptions";
 
 export const Control = () => {
   return (
@@ -12,9 +17,15 @@ export const Control = () => {
         </p>
       </div>
       <div className="bg-gray-100 my-4 w-full h-[100%]] mt-1 border border-gray-300 shadow-lg  overflow-y-auto">
-        <TopOption/>
-        <BottomOption />
-        <DoorOption />
+        <BaseSizeOption/>
+        <Louvers />
+        <Drainage />
+        <CanopySupport />
+        <ColorOptions />
+        <GlassRoom />
+        <RoofingOptions />
+        <SlotOptions />
+
       </div>
 
       

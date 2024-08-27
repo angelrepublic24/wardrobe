@@ -3,13 +3,13 @@ import { dropDown } from "../helpers/dropDown";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
 
-export const DoorOption = () => {
+export const GlassRoom = () => {
   const [isOpen, setIsOpen] = useState(false);
   const labels = [
-    { value: "None", name: "none" },
-    { value: "Slab Doors", name: "slab" },
-    { value: "Mirror Doors", name: "mirror" },
-    { value: "Shaker Doors", name: "shaker" },
+    { value: "Clear", name: "clear" },
+    { value: "Frosted", name: "frosted" },
+    { value: "Tinted", name: "tinted" },
+    // { value: "2 Shelves", name: "2Shelves" },
   ];
 
   return (
@@ -17,8 +17,8 @@ export const DoorOption = () => {
       <div className="flex justify-between">
         <div>
           <p className="font-bold text-sm">
-            DOOR OPTIONS
-            <span className="underline font-normal"> 2 Shelves</span>
+          Glass Room
+            {/* <span className="underline font-normal"> 2 Shelves</span> */}
           </p>
         </div>
         <div>
@@ -48,10 +48,10 @@ export const DoorOption = () => {
         <label className="text-sm" htmlFor={label.name}>{label.value}</label>
       </div>
     ))}
-    
   </div>
     }
-      <div className="border-b-2 border-b-gray-300 mt-1"></div>
+          <div className="border-b-2 border-b-gray-300 mt-1"></div>
+
     </div>
   );
 };

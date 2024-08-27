@@ -3,14 +3,14 @@ import { dropDown } from "../helpers/dropDown";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
 
-export const TopOption = () => {
+export const ColorOptions = () => {
   const [isOpen, setIsOpen] = useState(false);
   const labels = [
-    { value: "None", name: "none" },
-    { value: "Cubbies", name: "cubbies" },
-    { value: "Tall Hanging", name: "tHanging" },
-    { value: "Short Hanging", name: "sHanging" },
-    { value: "2 Shelves", name: "2Shelves" },
+    { value: "RAL Black", name: "rBlack" },
+    { value: "Bronze Matte Metallic", name: "bronzeMetallic" },
+    { value: "Black Matte", name: "bmate" },
+    { value: "Anodized Silver", name: "anodSilver" },
+    { value: "White Fine Texture", name: "wFineTexture" },
   ];
 
   return (
@@ -18,8 +18,8 @@ export const TopOption = () => {
       <div className="flex justify-between">
         <div>
           <p className="font-bold text-sm">
-            TOP OPTIONS
-            <span className="underline font-normal"> 2 Shelves</span>
+            Color Options
+            {/* <span className="underline font-normal"> 2 Shelves</span> */}
           </p>
         </div>
         <div>
