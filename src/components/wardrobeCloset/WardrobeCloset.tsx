@@ -25,13 +25,12 @@ const Model = ({ modelPath }) => {
   const gltf = useLoader(GLTFLoader, modelPath);
 
   gltf.scene.traverse((object) => {
-    if (object.isMesh) {
-      if (object.material) {
-        // Asignar un material básico con el color deseado
-        object.material = new THREE.MeshBasicMaterial({ color: "#c2c2c2" });
-      }
+    if (object.isMesh && object.material) {
+      // Usar MeshStandardMaterial para una mejor calidad y respuesta a las luces
+      object.material = new THREE.MeshStandardMaterial({ color: "#c2c2c2", metalness: 0.5, roughness: 0.5 });
     }
   });
+  
   gltf.scene.rotation.x = Math.PI / 1;
   return <primitive object={gltf.scene} />;
 };
@@ -40,31 +39,38 @@ const Model = ({ modelPath }) => {
 
 export const WardrobeCloset = ({ sizeOption }) => {
   const [modelPath, setModelPath] = useState('');
-  const [cameraPosition, setCameraPosition] = useState([4.69, 17.39, -20.05] as [number, number, number]);
+  const [cameraPosition, setCameraPosition] = useState([4.69, 17.39, -40.05] as [number, number, number]);
+  const [controlsTarget, setControlsTarget] = useState(new THREE.Vector3(0, 0, 0)); // Estado para el objetivo de los controles
+
   const mouse = useRef(new THREE.Vector2());
   
 
 
   useEffect(() => {
     let newPath = '';
-    let newCameraPosition = [30, 14.42, -22.58];
+    let newCameraPosition = [6.6851, 12.0991, 41.73998];
+    let newControlsTarget = new THREE.Vector3(5, 0, 0);
 
     switch (sizeOption) {
       case "8 In":
         newPath = 'images/base/8.glb';
-        newCameraPosition = [30, 14.42, -22.58];
+        newCameraPosition = [7.7, 19, 50];
+        newControlsTarget = new THREE.Vector3(5, 0, 0);
         break;
       case "6 In":
         newPath = 'images/base/6.glb';
         newCameraPosition = [30, 14.42, -22.58];
+        newControlsTarget = new THREE.Vector3(10, 0, 2);
         break;
       case "4 In":
         newPath = 'images/base/4.glb';
         newCameraPosition = [30, 14.42, -22.58];
+        newControlsTarget = new THREE.Vector3(12, 0, 2);
         break;
       case "2 In":
         newPath = 'images/base/2.glb';
         newCameraPosition = [30, 14.42, -22.58];
+        newControlsTarget = new THREE.Vector3(12, 0, 2);
         break;
       default:
         newPath = 'images/base/8.glb';
@@ -72,6 +78,7 @@ export const WardrobeCloset = ({ sizeOption }) => {
 
     setModelPath(newPath);
     setCameraPosition(newCameraPosition);
+    setControlsTarget(newControlsTarget);
   }, [sizeOption]);
 
   return (
@@ -89,13 +96,15 @@ export const WardrobeCloset = ({ sizeOption }) => {
           enableZoom={true}
           enablePan={true}
           autoRotate={false}
-          minDistance={1}
-          maxDistance={100}
+          minDistance={20}
+          maxDistance={55}
           mouseButtons={{
             LEFT: THREE.MOUSE.ROTATE,
             MIDDLE: THREE.MOUSE.PAN,
             RIGHT: THREE.MOUSE.ROTATE
           }}
+          target={controlsTarget} // Ajusta el punto al que la cámara mira por defecto
+          position={cameraPosition}
         />
         {modelPath && <Model modelPath={modelPath} />}
       </Canvas>
