@@ -32,7 +32,7 @@ export const BaseSizeOption = ({ sizeOption, onSizeChange }) => {
 
         {isOpen && (
           <div className="transition-all">
-            {["Channel", "8 Fascia", "6 Fascia", "Tube"].map((size) => (
+            {["8 In", "6 In", "4 In", "2 In"].map((size) => (
               <div key={size} className="col py-2">
                 <input
                   className="mr-2"
