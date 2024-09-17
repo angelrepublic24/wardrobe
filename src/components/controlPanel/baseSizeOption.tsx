@@ -2,57 +2,53 @@ import React, { useState } from "react";
 import { dropDown } from "../helpers/dropDown";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
-
-export const BaseSizeOption = () => {
+export const BaseSizeOption = ({ sizeOption, onSizeChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const labels = [
-    { value: "6 Inch", name: "sInch" },
-    { value: "8 Inch", name: "eInch" },
-    // { value: "Tall Hanging", name: "tHanging" },
-    // { value: "Short Hanging", name: "sHanging" },
-    // { value: "2 Shelves", name: "2Shelves" },
-  ];
+  
+  // Function to handle dropdown toggle
+  const toggleDropdown = () => {
+    setIsOpen(prev => !prev);
+  };
 
   return (
-    <div className="options flex flex-col p-3 box-content">
-      <div className="flex justify-between">
-        <div>
-          <p className="font-bold text-sm">
-            Base Size
-            {/* <span className="underline font-normal"> 2 Shelves</span> */}
-          </p>
+    <div className='border rounded-3xl bg-white'>
+      <div className="options flex flex-col p-3 box-content">
+        <div className="flex justify-between">
+          <div>
+            <p className="font-bold text-sm">Base Size</p>
+          </div>
+          <div>
+            {!isOpen ? (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowRight />
+              </button>
+            ) : (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowDown />
+              </button>
+            )}
+          </div>
         </div>
-        <div>
-        {!isOpen ? (
-            <button
-              onClick={() => dropDown(setIsOpen((prev) => !prev))}
-              className=""
-            >
-              <MdKeyboardArrowRight />
-            </button>
-          ) : (
-            <button
-              onClick={() => dropDown(setIsOpen((prev) => !prev))}
-              className=""
-            >
-              <MdKeyboardArrowDown />
-            </button>
-          )}
-        </div>
-      </div>
 
-    {isOpen &&
-    <div className="transition-all">
-    {labels.map((label, index) => (
-      <div key={index} className="col py-2">
-        <input className="mr-2" type="radio" name={label.name} id="" />
-        <label className="text-sm" htmlFor={label.name}>{label.value}</label>
+        {isOpen && (
+          <div className="transition-all">
+            {["Channel", "8 Fascia", "6 Fascia", "Tube"].map((size) => (
+              <div key={size} className="col py-2">
+                <input
+                  className="mr-2"
+                  type="radio"
+                  name="baseSize"
+                  value={size}
+                  checked={sizeOption === size}
+                  onChange={onSizeChange}
+                />
+                <label className="text-sm" htmlFor={size}>{size}</label>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="border-b-2 border-b-gray-300 mt-1"></div>
       </div>
-    ))}
-  </div>
-    }
-          <div className="border-b-2 border-b-gray-300 mt-1"></div>
-
     </div>
   );
 };
