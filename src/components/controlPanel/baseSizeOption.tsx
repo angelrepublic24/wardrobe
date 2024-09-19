@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { dropDown } from "../helpers/dropDown";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
 export const BaseSizeOption = ({ sizeOption, onSizeChange }) => {
@@ -32,7 +31,7 @@ export const BaseSizeOption = ({ sizeOption, onSizeChange }) => {
 
         {isOpen && (
           <div className="transition-all">
-            {["8 In", "6 In", "4 In", "2 In"].map((size) => (
+            {["20 ft", "18 ft","16 ft", "14 ft", "12 ft", "10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
               <div key={size} className="col py-2">
                 <input
                   className="mr-2"
@@ -41,6 +40,56 @@ export const BaseSizeOption = ({ sizeOption, onSizeChange }) => {
                   value={size}
                   checked={sizeOption === size}
                   onChange={onSizeChange}
+                />
+                <label className="text-sm" htmlFor={size}>{size}</label>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="border-b-2 border-b-gray-300 mt-1"></div>
+      </div>
+    </div>
+  );
+};
+
+export const LengthSideOption = ({ lengthSideOption, onLengthSizeChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(prev => !prev);
+  };
+
+  return (
+    <div className='border rounded-3xl bg-white'>
+      <div className="options flex flex-col p-3 box-content">
+        <div className="flex justify-between">
+          <div>
+            <p className="font-bold text-sm">Length Side</p>
+          </div>
+          <div>
+            {!isOpen ? (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowRight />
+              </button>
+            ) : (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowDown />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {isOpen && (
+          <div className="transition-all">
+            {["10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
+              <div key={size} className="col py-2">
+                <input
+                  className="mr-2"
+                  type="radio"
+                  name="lengthSide"
+                  value={size}
+                  checked={lengthSideOption === size}
+                  onChange={onLengthSizeChange}
                 />
                 <label className="text-sm" htmlFor={size}>{size}</label>
               </div>
