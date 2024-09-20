@@ -8,9 +8,9 @@ const CameraPositionLogger = () => {
   const { camera } = useThree();
   const cameraRef = useRef(camera);
 
-  useFrame(() => {
-    console.log(`X: ${cameraRef.current.position.x}, Y: ${cameraRef.current.position.y}, Z: ${cameraRef.current.position.z}`);
-  });
+  // useFrame(() => {
+  //   console.log(`X: ${cameraRef.current.position.x}, Y: ${cameraRef.current.position.y}, Z: ${cameraRef.current.position.z}`);
+  // });
 
   useEffect(() => {
     cameraRef.current = camera;
@@ -19,27 +19,64 @@ const CameraPositionLogger = () => {
   return null;
 };
 
-const Model = ({ modelPath }) => {
+const Model = ({ modelPath, rotation, onModelLoaded  }) => {
   const gltf = useLoader(GLTFLoader, modelPath);
-
-  // gltf.scene.traverse((object) => {
-  //   if (object.isMesh && object.material) {
-  //     object.material = new THREE.MeshStandardMaterial({ color: "#ccc", metalness: 0.5, roughness: 0.7 });
-  //   }
-  // });
-
   gltf.scene.scale.set(20, 20, 20);
-  gltf.scene.rotation.x = Math.PI / 0.5;
-  gltf.scene.rotation.y = Math.PI;
+  if (rotation) {
+    gltf.scene.rotation.set(rotation.x, rotation.y, rotation.z);
+  } else {
+    gltf.scene.rotation.x = Math.PI / 0.5; // Rotación por defecto
+    gltf.scene.rotation.y = Math.PI;
+  }
 
-  
+  useEffect(() => {
+    if (onModelLoaded) {
+      onModelLoaded(gltf.scene);
+    }
+  }, [gltf, onModelLoaded]);
+
   return <primitive object={gltf.scene} />;
 };
+const RotationControls = ({ model }) => {
+  const controlsRef = useRef();
+  const { camera } = useThree();
 
-export const WardrobeCloset = ({ sizeOption, lengthSideOption }) => {
+  useEffect(() => {
+    if (model && controlsRef.current) {
+      // Calcula el centro del modelo
+      const boundingBox = new THREE.Box3().setFromObject(model);
+      const center = boundingBox.getCenter(new THREE.Vector3());
+
+      // Establece el punto objetivo de los controles en el centro del modelo
+      controlsRef.current.target.copy(center);
+      camera.position.set(center.x + 15, center.y + 10, camera.position.z); // Opcional: Ajusta la posición inicial de la cámara
+      controlsRef.current.update();
+    }
+  }, [model, camera]);
+
+  return (
+    <OrbitControls
+      ref={controlsRef}
+      enableZoom={true}
+      enablePan={true}
+      minDistance={20}
+      maxDistance={150}
+      mouseButtons={{
+        LEFT: THREE.MOUSE.ROTATE,
+        MIDDLE: THREE.MOUSE.PAN,
+        RIGHT: THREE.MOUSE.ROTATE
+      }}
+    />
+  );
+};
+export const WardrobeCloset = ({ sizeOption, lengthSideOption, slotTopOption}) => {
   const [modelPath, setModelPath] = useState('');
+  const [model, setModel] = useState(null);
   const [cameraPosition, setCameraPosition] = useState([4.69, -10.39, -40.05]);
   const [controlsTarget, setControlsTarget] = useState(new THREE.Vector3(0, 0, 0));
+  const [rotation, setRotation] = useState(null); // Rotación opcional
+
+
   const cameraRef = useRef();
 
 
@@ -47,16 +84,18 @@ export const WardrobeCloset = ({ sizeOption, lengthSideOption }) => {
     let newPath = '';
     let newCameraPosition = [-6.6851, 17.0991, 81.73998];
     let newControlsTarget = new THREE.Vector3(2, 5, 47);
+    let newRotation = { x: Math.PI / 0.5, y: Math.PI, z: 0 };
 
     if (sizeOption && !lengthSideOption) {
       switch (sizeOption) {
         case "2 ft":
           newPath = 'images/base/2ft.glb';
           newCameraPosition = [10, 15, 50];
+          newControlsTarget.set(10, 5.5, 40);
           break;
         case "4 ft":
           newPath = 'images/base/4ft.glb';
-          newCameraPosition = [20, 20, 60];
+          newCameraPosition = [20, 20, 30];
           break;
         case "6 ft":
           newPath = 'images/base/6ft.glb';
@@ -101,6 +140,7 @@ export const WardrobeCloset = ({ sizeOption, lengthSideOption }) => {
         // Base 2 ft
         case "2 ft-2 ft":
           newPath = 'images/completSize/2x2.glb';
+          newControlsTarget.set(10, 5.5, 40);
           break;
         case "2 ft-4 ft":
           newPath = 'images/completSize/2x4.glb';
@@ -272,13 +312,235 @@ export const WardrobeCloset = ({ sizeOption, lengthSideOption }) => {
           break;
       }
     }
+
+    // Slot Top
+    if (sizeOption && lengthSideOption && slotTopOption) {
+      switch (`${sizeOption}-${lengthSideOption}-${slotTopOption}`) {
+        // 2 ft
+        case "2 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/2x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "2 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/2x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "2 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/2x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "2 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/2x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "2 ft-10 ft-Channel":
+         newPath = 'images/slotTop/Channel/2x10.glb';
+         newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+         break;
+
+      // 4 Ft
+        case "4 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/4x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "4 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/4x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "4 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/4x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "4 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/4x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+          break;
+        case "4 ft-10 ft-Channel":
+         newPath = 'images/slotTop/Channel/4x10.glb';
+         newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 }
+         break;
+         case "6 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/6x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/6x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/6x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/6x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/6x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+          
+        case "8 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/8x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/8x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/8x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/8x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/8x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+          
+        case "10 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/10x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/10x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/10x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/10x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/10x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+      
+        case "12 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/12x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/12x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/12x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/12x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/12x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+      
+        case "14 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/14x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/14x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/14x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/14x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/14x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+      
+        case "16 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/16x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/16x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/16x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/16x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/16x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+      
+        case "18 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/18x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/18x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/18x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/18x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/18x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+      
+        case "20 ft-2 ft-Channel":
+          newPath = 'images/slotTop/Channel/20x2.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-4 ft-Channel":
+          newPath = 'images/slotTop/Channel/20x4.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-6 ft-Channel":
+          newPath = 'images/slotTop/Channel/20x6.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-8 ft-Channel":
+          newPath = 'images/slotTop/Channel/20x8.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-10 ft-Channel":
+          newPath = 'images/slotTop/Channel/20x10.glb';
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+
+        // Añadir más combinaciones aquí
+        default:
+          break;
+      }
+    }
     
 
 
     setModelPath(newPath);
     setCameraPosition(newCameraPosition);
+    
     setControlsTarget(newControlsTarget);
-  }, [sizeOption, lengthSideOption]);
+    setRotation(newRotation);
+  }, [sizeOption, lengthSideOption, slotTopOption]);
 
   useEffect(() => {
     if (cameraRef.current) {
@@ -286,34 +548,23 @@ export const WardrobeCloset = ({ sizeOption, lengthSideOption }) => {
     }
   }, [cameraPosition]);
 
+  const handleModelLoaded = (loadedModel) => {
+    setModel(loadedModel);
+  };
   return (
-    <div className='border rounded-3xl bg-white'>
+    <div className='border rounded-3xl bg-white w-full md:w-1/2'>
       <Canvas
         className='border rounded-3xl bg-white'
         camera={{ position: cameraPosition, fov: 25 }}
-        style={{ height: '600px', width: '600px', background: '#d3d3d3' }}
+        style={{ height: '600px', width: '100%', background: '#d3d3d3' }}
       >
         <CameraPositionLogger />
         <ambientLight intensity={0.8} />
         <directionalLight position={[10, 10, 10]} intensity={1.5} />
         <pointLight position={[10, 10, 10]} intensity={1.5} />
         <spotLight position={[1, 10, 10]} angle={0.15} penumbra={4} intensity={1} castShadow />
-        <OrbitControls
-          enableZoom={true}
-          enablePan={true}
-          autoRotate={false}
-          minDistance={50}
-          maxDistance={200}
-          mouseButtons={{
-            LEFT: THREE.MOUSE.ROTATE,
-            MIDDLE: THREE.MOUSE.PAN,
-            RIGHT: THREE.MOUSE.ROTATE
-          }}
-          target={controlsTarget}
-          position={cameraPosition}
-        />
-        {modelPath && <Model modelPath={modelPath} />}
-        <perspectiveCamera ref={cameraRef} position={cameraPosition} />
+        {modelPath && <Model modelPath={modelPath} rotation={rotation} onModelLoaded={handleModelLoaded} />}
+        {model && <RotationControls model={model} />}
       </Canvas>
     </div>
   );

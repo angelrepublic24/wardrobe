@@ -10,7 +10,7 @@ export const BaseSizeOption = ({ sizeOption, onSizeChange }) => {
   };
 
   return (
-    <div className='border rounded-3xl bg-white'>
+    <div className='border rounded-xl bg-white'>
       <div className="options flex flex-col p-3 box-content">
         <div className="flex justify-between">
           <div>
@@ -92,6 +92,58 @@ export const LengthSideOption = ({ lengthSideOption, onLengthSizeChange }) => {
                   onChange={onLengthSizeChange}
                 />
                 <label className="text-sm" htmlFor={size}>{size}</label>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="border-b-2 border-b-gray-300 mt-1"></div>
+      </div>
+    </div>
+  );
+};
+
+export const SlotTopOptions = ({ slotTopOption, onSlotTopChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(prev => !prev);
+  };
+
+  return (
+    <div className="border rounded-3xl bg-white">
+      <div className="options flex flex-col p-3 box-content">
+        <div className="flex justify-between">
+          <div>
+            <p className="font-bold text-sm">Slot Top</p>
+          </div>
+          <div>
+            {!isOpen ? (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowRight />
+              </button>
+            ) : (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowDown />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {isOpen && (
+          <div className="transition-all">
+            {["Tube", "Channel", "Crown", "None"].map((slot) => (
+              <div key={slot} className="col py-2">
+                <input
+                  className="mr-2"
+                  type="radio"
+                  name="slotTop"
+                  value={slot}
+                  checked={slotTopOption === slot}
+                  onChange={onSlotTopChange} // Actualizar el estado slotOption
+                />
+                <label className="text-sm" htmlFor={slot}>
+                  {slot}
+                </label>
               </div>
             ))}
           </div>
