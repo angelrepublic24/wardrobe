@@ -153,3 +153,55 @@ export const SlotTopOptions = ({ slotTopOption, onSlotTopChange }) => {
     </div>
   );
 };
+
+export const SlotBottomOptions = ({ slotBottomOption, onSlotBottomChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(prev => !prev);
+  };
+
+  return (
+    <div className="border rounded-3xl bg-white">
+      <div className="options flex flex-col p-3 box-content">
+        <div className="flex justify-between">
+          <div>
+            <p className="font-bold text-sm">Slot Bottom</p>
+          </div>
+          <div>
+            {!isOpen ? (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowRight />
+              </button>
+            ) : (
+              <button onClick={toggleDropdown}>
+                <MdKeyboardArrowDown />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {isOpen && (
+          <div className="transition-all">
+            {["Tube", "Channel", "Crown", "None"].map((slot) => (
+              <div key={slot} className="col py-2">
+                <input
+                  className="mr-2"
+                  type="radio"
+                  name="slotBottom"
+                  value={slot}
+                  checked={slotBottomOption === slot}
+                  onChange={onSlotBottomChange} // Actualizar el estado slotOption
+                />
+                <label className="text-sm" htmlFor={slot}>
+                  {slot}
+                </label>
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="border-b-2 border-b-gray-300 mt-1"></div>
+      </div>
+    </div>
+  );
+};

@@ -73,6 +73,7 @@ export const WardrobeCloset = ({
   sizeOption,
   lengthSideOption,
   slotTopOption,
+  slotBottomOption
 }) => {
   const [modelPath, setModelPath] = useState("");
   const [model, setModel] = useState(null);
@@ -978,6 +979,237 @@ export const WardrobeCloset = ({
           break;
       }
     }
+
+    // Slot Bottom 
+    if (sizeOption && lengthSideOption && (!slotTopOption || slotTopOption === 'none') && slotBottomOption) {
+      switch (`${sizeOption}-${lengthSideOption}-${slotBottomOption}`) {
+        // Channel
+        // 2 ft
+        case "2 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/2x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "2 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/2x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "2 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/2x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "2 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/2x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "2 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/2x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 4 ft
+        case "4 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/4x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "4 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/4x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "4 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/4x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "4 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/4x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "4 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/4x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 6 ft
+        case "6 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/6x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/6x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/6x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/6x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "6 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/6x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 8 ft
+        case "8 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/8x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/8x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/8x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/8x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "8 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/8x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 10 ft
+        case "10 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/10x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/10x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/10x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/10x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "10 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/10x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 12 ft
+        case "12 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/12x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/12x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/12x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/12x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "12 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/12x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 14 ft
+        case "14 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/14x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/14x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/14x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/14x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "14 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/14x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 16 ft
+        case "16 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/16x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/16x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/16x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/16x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "16 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/16x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 18 ft
+        case "18 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/18x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/18x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/18x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/18x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "18 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/18x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        // 20 ft
+        case "20 ft-2 ft-Channel":
+          newPath = "images/slotBottom/Channel/20x2.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-4 ft-Channel":
+          newPath = "images/slotBottom/Channel/20x4.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-6 ft-Channel":
+          newPath = "images/slotBottom/Channel/20x6.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-8 ft-Channel":
+          newPath = "images/slotBottom/Channel/20x8.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+        case "20 ft-10 ft-Channel":
+          newPath = "images/slotBottom/Channel/20x10.glb";
+          newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+          break;
+    
+        default:
+          console.log("Invalid configuration");
+          break;
+      }
+    }
+    
 
     setModelPath(newPath);
     setCameraPosition(newCameraPosition);
