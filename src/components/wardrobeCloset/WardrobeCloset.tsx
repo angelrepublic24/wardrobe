@@ -90,8 +90,6 @@ export const WardrobeCloset = ({
     let newCameraPosition = [-6.6851, 17.0991, 81.73998];
     let newControlsTarget = new THREE.Vector3(2, 5, 47);
     let newRotation = { x: Math.PI / 0.5, y: Math.PI, z: 0 };
-    const baseSizes = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20];
-    const lengthSizes = [2, 4, 6, 8, 10];
 
     if (sizeOption && !lengthSideOption) {
       switch (sizeOption) {
