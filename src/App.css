@@ -1,0 +1,14 @@
+button{
+    border: 1px solid #f99d1b;
+    color: #f99d1b !important;
+}
+
+button:hover{
+    background: #f99d1b;
+    color: white !important;
+}
+
+.button-selected {
+    background: #f99d1b !important; /* Color de fondo */
+    color: white !important; /* Color del texto */
+}

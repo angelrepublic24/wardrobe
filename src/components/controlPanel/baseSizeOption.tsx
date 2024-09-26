@@ -29,11 +29,12 @@ export const BaseSizeOption = forwardRef(
             ].map((size) => (
               <div key={size} className="py-2">
                 <button
-                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                  className={`w-full py-3 text-sm rounded-lg 
                     ${
                       sizeOption === size
-                        ? "bg-gray-300 border-gray-400"
-                        : "bg-white border-gray-200"
+                      ? "button-selected" // Estilo cuando está seleccionado
+                      : "bg-white" // 
+                      
                     }`}
                   onClick={() => onSizeChange({ target: { value: size } })}
                 >
@@ -45,8 +46,7 @@ export const BaseSizeOption = forwardRef(
           <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
-              className="btn h-14 px-4 rounded-md  text-white"
-              style={{ background: "#f99d1b" }}
+              className="btn h-14 px-4 rounded-md "
             >
               Next Step
             </button>
@@ -77,11 +77,11 @@ export const LengthSideOption = forwardRef(
             {["10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
               <div key={size} className="py-2">
                 <button
-                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                  className={`w-full py-3 text-sm rounded-lg 
                     ${
                       lengthSideOption === size
-                        ? "bg-gray-300 border-gray-400"
-                        : "bg-white border-gray-200"
+                      ? "button-selected" // Estilo cuando está seleccionado
+                      : "bg-white" // 
                     }`}
                   onClick={() =>
                     onLengthSizeChange({ target: { value: size } })
@@ -95,8 +95,8 @@ export const LengthSideOption = forwardRef(
           <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
-              className="btn h-14 px-4 rounded-md  text-white"
-              style={{ background: "#f99d1b" }}
+              className="btn h-14 px-4 rounded-md"
+
             >
               Next Step
             </button>
@@ -127,11 +127,11 @@ export const SlotTopOptions = forwardRef(
             {["Tube", "Channel", "Crown", "None"].map((slot) => (
               <div key={slot} className="py-2">
                 <button
-                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                  className={`w-full py-3 rounded-lg 
                    ${
                      slotTopOption === slot
-                       ? "bg-gray-300 border-gray-400"
-                       : "bg-white border-gray-200"
+                     ? "button-selected" // Estilo cuando está seleccionado
+                      : "bg-white" // 
                    }`}
                   onClick={() => onSlotTopChange({ target: { value: slot } })}
                 >
@@ -143,8 +143,8 @@ export const SlotTopOptions = forwardRef(
           <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
-              className="btn h-14 px-4 rounded-md  text-white"
-              style={{ background: "#f99d1b" }}
+              className="btn h-14 px-4 rounded-m"
+
             >
               Next Step
             </button>
@@ -174,11 +174,11 @@ export const SlotBottomOptions = forwardRef(
             {["Tube", "Channel", "Crown", "None"].map((slot) => (
               <div key={slot} className="py-2">
                 <button
-                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                  className={`w-full py-3 text-sm rounded-lg 
                    ${
                      slotBottomOption === slot
-                       ? "bg-gray-300 border-gray-400"
-                       : "bg-white border-gray-200"
+                     ? ".button-selected"
+                     : "bg-white"
                    }`}
                   onClick={() =>
                     onSlotBottomChange({ target: { value: slot } })
@@ -190,8 +190,7 @@ export const SlotBottomOptions = forwardRef(
             ))}
           </div>
           <button
-            className="btn h-14 px-4 rounded-md  text-white"
-            style={{ background: "#f99d1b" }}
+            className="btn h-14 px-4 rounded-md  "
           >
             Next Step
           </button>
