@@ -26,8 +26,8 @@ export const Closet = () => {
   };
 
   return (
-    <div className='flex flex-col md:flex-row'>
-      <div className='relative w-3/4'>
+    <div className='flex flex-col flex-col md:flex-row'>
+      <div className='relative w-full md:w-3/4 h-[55vh] md:h-[80vh]'>
       <WardrobeCloset
         sizeOption={sizeOption}
         lengthSideOption={lengthSideOption}
@@ -35,17 +35,17 @@ export const Closet = () => {
         slotBottomOption={slotBottomOption}
       />
       </div>
+        <Control
+          sizeOption={sizeOption}
+          lengthSideOption={lengthSideOption}
+          slotTopOption={slotTopOption}
+          slotBottomOption={slotBottomOption}
+          onSizeChange={handleSizeChange}
+          onLengthSizeChange={handleLengthSizeChange}
+          onSlotTopChange={handleSlotTopOptionChange}
+          onSlotBottomChange={handleSlotBottomOptionChange}
+        />
       
-      <Control
-        sizeOption={sizeOption}
-        lengthSideOption={lengthSideOption}
-        slotTopOption={slotTopOption}
-        slotBottomOption={slotBottomOption}
-        onSizeChange={handleSizeChange}
-        onLengthSizeChange={handleLengthSizeChange}
-        onSlotTopChange={handleSlotTopOptionChange}
-        onSlotBottomChange={handleSlotBottomOptionChange}
-      />
     </div>
   );
 };

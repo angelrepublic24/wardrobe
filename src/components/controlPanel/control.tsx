@@ -53,9 +53,9 @@ export const Control = ({
   };
 
   return (
-    <div className=" flex flex-col w-100 md:w-[25%] md:h-800px  overflow-hidden box-content mr-2 justify-end">
+    <div className=" flex flex-col w-100 md:w-[25%] h-[40%] md:h-[25%] md:h-800px  overflow-hidden box-content mr-2 justify-end">
 
-      <div className=" relative my-4 w-full h-[100%] mt-1  overflow-y-auto flex items-center flex-col">
+      <div className=" relative my-4 w-full h-[100%] mt-1  overflow-y-auto flex  flex-col">
         <BaseSizeOption
           sizeOption={sizeOption}
           onSizeChange={onSizeChange}

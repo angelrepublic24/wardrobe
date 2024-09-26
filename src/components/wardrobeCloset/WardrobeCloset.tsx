@@ -3896,11 +3896,11 @@ export const WardrobeCloset = ({
     setModel(loadedModel);
   };
   return (
-    <div className="border rounded-3xl bg-white w-full md:w-3/4 fixed" style={{height: '80vh'}}>
+    <div className="border md:rounded-3xl bg-white w-full z-10 md:z-0  md:w-3/5 fixed h-[55vh] md:h-[80vh]" >
       <Canvas
-        className="border rounded-3xl bg-white"
+        className="border md:rounded-3xl bg-white w-full md:w-3/4"
         camera={{ position: cameraPosition, fov: 25 }}
-        style={{ height: "100%", width: "75%", background: "#f5f5f5" }}
+        style={{ height: "100%", background: "#f5f5f5" }}
       >
         <CameraPositionLogger />
         <ambientLight intensity={0.8} />

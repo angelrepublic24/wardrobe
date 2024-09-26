@@ -6,7 +6,7 @@ export const BaseSizeOption = forwardRef(
     return (
       <div
         ref={ref}
-        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+        className="bg-white rounded-xl p-5 w-full md:h-screen flex items-center"
       >
         <div className="options flex flex-col h-full justify-center items-center w-full">
           <div className="flex justify-center items-center mb-4 =">
@@ -42,7 +42,7 @@ export const BaseSizeOption = forwardRef(
               </div>
             ))}
           </div>
-          <div className="w-full flex justify-end items-end">
+          <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
               className="btn h-14 px-4 rounded-md  text-white"
@@ -61,9 +61,9 @@ export const LengthSideOption = forwardRef(
     return (
       <div
         ref={ref}
-        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+        className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
       >
-        <div className="options flex flex-col h-full justify-center items-center w-full">
+        <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
           <div className="flex justify-center items-center mb-4 =">
             <div>
               <span>
@@ -92,7 +92,7 @@ export const LengthSideOption = forwardRef(
               </div>
             ))}
           </div>
-          <div className="w-full flex justify-end items-end">
+          <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
               className="btn h-14 px-4 rounded-md  text-white"
@@ -112,9 +112,9 @@ export const SlotTopOptions = forwardRef(
     return (
       <div
         ref={ref}
-        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+        className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
       >
-        <div className="options flex flex-col h-full justify-center items-center w-full">
+        <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
           <div className="flex justify-center items-center mb-4 =">
             <div>
               <span>
@@ -140,7 +140,7 @@ export const SlotTopOptions = forwardRef(
               </div>
             ))}
           </div>
-          <div className="w-full flex justify-end items-end">
+          <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
               className="btn h-14 px-4 rounded-md  text-white"
@@ -159,14 +159,14 @@ export const SlotBottomOptions = forwardRef(
     return (
       <div
         ref={ref}
-        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+        className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
       >
-        <div className="options flex flex-col h-full justify-center items-center w-full">
+        <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
           <div className="flex justify-center items-center mb-4 =">
             <div>
               <span>
                 Choose your{" "}
-                <p className="font-bold text-md inline-block">Slot Top:</p>{" "}
+                <p className="font-bold text-md inline-block">Slot Bottom:</p>{" "}
               </span>
             </div>
           </div>
