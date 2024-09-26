@@ -21,6 +21,8 @@ const CameraPositionLogger = () => {
 
 const Model = ({ modelPath, rotation, onModelLoaded }) => {
   const gltf = useLoader(GLTFLoader, modelPath);
+
+  // Escala y rotación del modelo
   gltf.scene.scale.set(20, 20, 20);
   if (rotation) {
     gltf.scene.rotation.set(rotation.x, rotation.y, rotation.z);
@@ -28,6 +30,17 @@ const Model = ({ modelPath, rotation, onModelLoaded }) => {
     gltf.scene.rotation.x = Math.PI / 0.5; // Rotación por defecto
     gltf.scene.rotation.y = Math.PI;
   }
+
+  // Mantener los materiales y texturas originales
+  gltf.scene.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true; // Habilitar sombra
+      child.receiveShadow = true; // Recibir sombra
+
+      // Asegúrate de no sobrescribir el material original
+      // child.material.map ya contiene la textura original del modelo
+    }
+  });
 
   useEffect(() => {
     if (onModelLoaded) {
@@ -3883,11 +3896,11 @@ export const WardrobeCloset = ({
     setModel(loadedModel);
   };
   return (
-    <div className="border rounded-3xl bg-white w-full md:w-1/2">
+    <div className="border rounded-3xl bg-white w-full md:w-3/4 fixed" style={{height: '80vh'}}>
       <Canvas
         className="border rounded-3xl bg-white"
         camera={{ position: cameraPosition, fov: 25 }}
-        style={{ height: "600px", width: "100%", background: "#d3d3d3" }}
+        style={{ height: "100%", width: "75%", background: "#f5f5f5" }}
       >
         <CameraPositionLogger />
         <ambientLight intensity={0.8} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { BaseSizeOption, LengthSideOption, SlotBottomOptions, SlotTopOptions } from "./baseSizeOption";
 import { Louvers } from "./louvers";
 import { Drainage } from "./drainage";
@@ -18,43 +18,73 @@ export const Control = ({
   onSlotBottomChange,
 }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [showLengthSide, setShowLengthSide] = useState(false); // Estado para mostrar LengthSideOption
+  const [showSlotTop, setShowSlotTop] = useState(false);
+  const [showBottomTop, setShowBottomTop] = useState(false);
+
+
+  const baseSizeRef = useRef(null);
+  const lengthSideRef = useRef(null);
+  const slotTopRef = useRef(null)
+  const slotBottomRef = useRef(null)
 
   const toggleDropdown = (dropdown) => {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
+  const handleNextStep = (refToShow, setShowFunc, setShowBottom) => {
+    // Cerrar otras opciones
+    if (refToShow === lengthSideRef) {
+      setShowLengthSide(true);
+      setShowSlotTop(false); // Cerrar SlotTopOptions
+    } else if (refToShow === slotTopRef) {
+      setShowSlotTop(true);
+    } else if (refToShow === slotBottomRef) {
+      setShowBottomTop(true);
+  }
+    
+    setTimeout(() => {
+      if (refToShow.current) {
+        window.scrollTo({
+          top: refToShow.current.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+  };
 
   return (
-    <div className="relative flex flex-col w-100 md:w-[700px] md:h-[600px] border rounded-3xl bg-white overflow-hidden box-content mr-2">
-      <div className="color bg-black p-1">
-        <p className="text-white">
-          Color <span>WHITE</span>
-        </p>
-      </div>
-      <div className="bg-gray-100 my-4 w-full h-[100%] mt-1 border border-gray-300 shadow-lg overflow-y-auto">
+    <div className=" flex flex-col w-100 md:w-[25%] md:h-800px  overflow-hidden box-content mr-2 justify-end">
+
+      <div className=" relative my-4 w-full h-[100%] mt-1  overflow-y-auto flex items-center flex-col">
         <BaseSizeOption
           sizeOption={sizeOption}
           onSizeChange={onSizeChange}
-          isOpen={openDropdown === 'baseSize'}
-          toggleDropdown={() => toggleDropdown('baseSize')}
+          handleNextStep={() => handleNextStep(lengthSideRef)}
         />
-        <LengthSideOption
-          lengthSideOption={lengthSideOption}
-          onLengthSizeChange={onLengthSizeChange}
-          isOpen={openDropdown === 'lengthSide'}
-          toggleDropdown={() => toggleDropdown('lengthSide')}
-        />
-        <SlotTopOptions
-          slotTopOption={slotTopOption}
-          onSlotTopChange={onSlotTopChange}
-          isOpen={openDropdown === 'slotTop'}
-          toggleDropdown={() => toggleDropdown('slotTop')}
-        />
-        <SlotBottomOptions
+        {showLengthSide && (
+          <LengthSideOption
+            ref={lengthSideRef} 
+            lengthSideOption={lengthSideOption}
+            onLengthSizeChange={onLengthSizeChange}
+            handleNextStep={() => handleNextStep(slotTopRef)}
+          />
+        )}
+        {showSlotTop && (
+          <SlotTopOptions
+            ref={slotTopRef}
+            slotTopOption={slotTopOption}
+            onSlotTopChange={onSlotTopChange}
+            handleNextStep={() => handleNextStep(slotBottomRef)}
+          />
+        )}
+        {showBottomTop && (
+          <SlotBottomOptions
+          ref={slotBottomRef}
           slotBottomOption={slotBottomOption}
           onSlotBottomChange={onSlotBottomChange}
-          isOpen={openDropdown === 'slotBottom'}
-          toggleDropdown={() => toggleDropdown('slotBottom')}
         />
+        )}
+        
         {/* <Louvers />
         <Drainage />
         <CanopySupport />

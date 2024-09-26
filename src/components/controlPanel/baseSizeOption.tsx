@@ -1,364 +1,202 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 
-// export const BaseSizeOption = ({ sizeOption, onSizeChange }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-  
-//   // Function to handle dropdown toggle
-//   const toggleDropdown = () => {
-//     setIsOpen(prev => !prev);
-//   };
-
-//   return (
-//     <div className='border rounded-xl bg-white'>
-//       <div className="options flex flex-col p-3 box-content">
-//         <div className="flex justify-between">
-//           <div>
-//             <p className="font-bold text-sm">Base Size</p>
-//           </div>
-//           <div>
-//             {!isOpen ? (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowRight />
-//               </button>
-//             ) : (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowDown />
-//               </button>
-//             )}
-//           </div>
-//         </div>
-
-//         {isOpen && (
-//           <div className="transition-all">
-//             {["20 ft", "18 ft","16 ft", "14 ft", "12 ft", "10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
-//               <div key={size} className="col py-2">
-//                 <input
-//                   className="mr-2"
-//                   type="radio"
-//                   name="baseSize"
-//                   value={size}
-//                   checked={sizeOption === size}
-//                   onChange={onSizeChange}
-//                 />
-//                 <label className="text-sm" htmlFor={size}>{size}</label>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//         <div className="border-b-2 border-b-gray-300 mt-1"></div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const LengthSideOption = ({ lengthSideOption, onLengthSizeChange }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const toggleDropdown = () => {
-//     setIsOpen(prev => !prev);
-//   };
-
-//   return (
-//     <div className='border rounded-3xl bg-white'>
-//       <div className="options flex flex-col p-3 box-content">
-//         <div className="flex justify-between">
-//           <div>
-//             <p className="font-bold text-sm">Length Side</p>
-//           </div>
-//           <div>
-//             {!isOpen ? (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowRight />
-//               </button>
-//             ) : (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowDown />
-//               </button>
-//             )}
-//           </div>
-//         </div>
-
-//         {isOpen && (
-//           <div className="transition-all">
-//             {["10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
-//               <div key={size} className="col py-2">
-//                 <input
-//                   className="mr-2"
-//                   type="radio"
-//                   name="lengthSide"
-//                   value={size}
-//                   checked={lengthSideOption === size}
-//                   onChange={onLengthSizeChange}
-//                 />
-//                 <label className="text-sm" htmlFor={size}>{size}</label>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//         <div className="border-b-2 border-b-gray-300 mt-1"></div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const SlotTopOptions = ({ slotTopOption, onSlotTopChange }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const toggleDropdown = () => {
-//     setIsOpen(prev => !prev);
-//   };
-
-//   return (
-//     <div className="border rounded-3xl bg-white">
-//       <div className="options flex flex-col p-3 box-content">
-//         <div className="flex justify-between">
-//           <div>
-//             <p className="font-bold text-sm">Slot Top</p>
-//           </div>
-//           <div>
-//             {!isOpen ? (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowRight />
-//               </button>
-//             ) : (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowDown />
-//               </button>
-//             )}
-//           </div>
-//         </div>
-
-//         {isOpen && (
-//           <div className="transition-all">
-//             {["Tube", "Channel", "Crown", "None"].map((slot) => (
-//               <div key={slot} className="col py-2">
-//                 <input
-//                   className="mr-2"
-//                   type="radio"
-//                   name="slotTop"
-//                   value={slot}
-//                   checked={slotTopOption === slot}
-//                   onChange={onSlotTopChange} // Actualizar el estado slotOption
-//                 />
-//                 <label className="text-sm" htmlFor={slot}>
-//                   {slot}
-//                 </label>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//         <div className="border-b-2 border-b-gray-300 mt-1"></div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export const SlotBottomOptions = ({ slotBottomOption, onSlotBottomChange }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const toggleDropdown = () => {
-//     setIsOpen(prev => !prev);
-//   };
-
-//   return (
-//     <div className="border rounded-3xl bg-white">
-//       <div className="options flex flex-col p-3 box-content">
-//         <div className="flex justify-between">
-//           <div>
-//             <p className="font-bold text-sm">Slot Bottom</p>
-//           </div>
-//           <div>
-//             {!isOpen ? (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowRight />
-//               </button>
-//             ) : (
-//               <button onClick={toggleDropdown}>
-//                 <MdKeyboardArrowDown />
-//               </button>
-//             )}
-//           </div>
-//         </div>
-
-//         {isOpen && (
-//           <div className="transition-all">
-//             {["Tube", "Channel", "Crown", "None"].map((slot) => (
-//               <div key={slot} className="col py-2">
-//                 <input
-//                   className="mr-2"
-//                   type="radio"
-//                   name="slotBottom"
-//                   value={slot}
-//                   checked={slotBottomOption === slot}
-//                   onChange={onSlotBottomChange} // Actualizar el estado slotOption
-//                 />
-//                 <label className="text-sm" htmlFor={slot}>
-//                   {slot}
-//                 </label>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//         <div className="border-b-2 border-b-gray-300 mt-1"></div>
-//       </div>
-//     </div>
-//   );
-// };
-
-
-
-
-export const BaseSizeOption = ({ sizeOption, onSizeChange, isOpen, toggleDropdown }) => {
-  return (
-    <div className='border rounded-xl bg-white'>
-      <div className="options flex flex-col p-3 box-content">
-        <div className="flex justify-between">
-          <div>
-            <p className="font-bold text-sm">Base Size</p>
+export const BaseSizeOption = forwardRef(
+  ({ sizeOption, onSizeChange, handleNextStep }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+      >
+        <div className="options flex flex-col h-full justify-center items-center w-full">
+          <div className="flex justify-center items-center mb-4 =">
+            <div>
+              <p className="font-bold text-lg">Pick your base size</p>
+            </div>
           </div>
-          <div>
-            <button onClick={toggleDropdown}>
-              {isOpen ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
-            </button>
-          </div>
-        </div>
-
-        {isOpen && (
-          <div className="transition-all">
-            {["20 ft", "18 ft","16 ft", "14 ft", "12 ft", "10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
-              <div key={size} className="col py-2">
-                <input
-                  className="mr-2"
-                  type="radio"
-                  name="baseSize"
-                  value={size}
-                  checked={sizeOption === size}
-                  onChange={onSizeChange}
-                />
-                <label className="text-sm" htmlFor={size}>{size}</label>
+          <div className="grid grid-cols-5 gap-4 mb-4 w-full">
+            {[
+              "20 ft",
+              "18 ft",
+              "16 ft",
+              "14 ft",
+              "12 ft",
+              "10 ft",
+              "8 ft",
+              "6 ft",
+              "4 ft",
+              "2 ft",
+            ].map((size) => (
+              <div key={size} className="py-2">
+                <button
+                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                    ${
+                      sizeOption === size
+                        ? "bg-gray-300 border-gray-400"
+                        : "bg-white border-gray-200"
+                    }`}
+                  onClick={() => onSizeChange({ target: { value: size } })}
+                >
+                  {size}
+                </button>
               </div>
             ))}
           </div>
-        )}
-        <div className="border-b-2 border-b-gray-300 mt-1"></div>
-      </div>
-    </div>
-  );
-};
-export const LengthSideOption = ({ lengthSideOption, onLengthSizeChange, isOpen, toggleDropdown }) => {
-  return (
-    <div className='border rounded-3xl bg-white'>
-      <div className="options flex flex-col p-3 box-content">
-        <div className="flex justify-between">
-          <div>
-            <p className="font-bold text-sm">Length Side</p>
-          </div>
-          <div>
-            <button onClick={toggleDropdown}>
-              {isOpen ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
+          <div className="w-full flex justify-end items-end">
+            <button
+              onClick={handleNextStep}
+              className="btn h-14 px-4 rounded-md  text-white"
+              style={{ background: "#f99d1b" }}
+            >
+              Next Step
             </button>
           </div>
         </div>
+      </div>
+    );
+  }
+);
+export const LengthSideOption = forwardRef(
+  ({ lengthSideOption, onLengthSizeChange, handleNextStep }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+      >
+        <div className="options flex flex-col h-full justify-center items-center w-full">
+          <div className="flex justify-center items-center mb-4 =">
+            <div>
+              <span>
+                Choose your{" "}
+                <p className="font-bold text-md inline-block">Length Side:</p>{" "}
+              </span>
+            </div>
+          </div>
 
-        {isOpen && (
-          <div className="transition-all">
+          <div className="grid grid-cols-5 gap-4 mb-4 w-full">
             {["10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
-              <div key={size} className="col py-2">
-                <input
-                  className="mr-2"
-                  type="radio"
-                  name="lengthSide"
-                  value={size}
-                  checked={lengthSideOption === size}
-                  onChange={onLengthSizeChange}
-                />
-                <label className="text-sm" htmlFor={size}>{size}</label>
+              <div key={size} className="py-2">
+                <button
+                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                    ${
+                      lengthSideOption === size
+                        ? "bg-gray-300 border-gray-400"
+                        : "bg-white border-gray-200"
+                    }`}
+                  onClick={() =>
+                    onLengthSizeChange({ target: { value: size } })
+                  }
+                >
+                  {size}
+                </button>
               </div>
             ))}
           </div>
-        )}
-        <div className="border-b-2 border-b-gray-300 mt-1"></div>
-      </div>
-    </div>
-  );
-};
-
-export const SlotTopOptions = ({ slotTopOption, onSlotTopChange, isOpen, toggleDropdown }) => {
-  return (
-    <div className="border rounded-3xl bg-white">
-      <div className="options flex flex-col p-3 box-content">
-        <div className="flex justify-between">
-          <div>
-            <p className="font-bold text-sm">Slot Top</p>
-          </div>
-          <div>
-            <button onClick={toggleDropdown}>
-              {isOpen ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
+          <div className="w-full flex justify-end items-end">
+            <button
+              onClick={handleNextStep}
+              className="btn h-14 px-4 rounded-md  text-white"
+              style={{ background: "#f99d1b" }}
+            >
+              Next Step
             </button>
           </div>
         </div>
+      </div>
+    );
+  }
+);
 
-        {isOpen && (
-          <div className="transition-all">
+export const SlotTopOptions = forwardRef(
+  ({ slotTopOption, onSlotTopChange, handleNextStep }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+      >
+        <div className="options flex flex-col h-full justify-center items-center w-full">
+          <div className="flex justify-center items-center mb-4 =">
+            <div>
+              <span>
+                Choose your{" "}
+                <p className="font-bold text-md inline-block">Slot Top:</p>{" "}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 gap-4 mb-4 w-full">
             {["Tube", "Channel", "Crown", "None"].map((slot) => (
-              <div key={slot} className="col py-2">
-                <input
-                  className="mr-2"
-                  type="radio"
-                  name="slotTop"
-                  value={slot}
-                  checked={slotTopOption === slot}
-                  onChange={onSlotTopChange}
-                />
-                <label className="text-sm" htmlFor={slot}>
+              <div key={slot} className="py-2">
+                <button
+                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                   ${
+                     slotTopOption === slot
+                       ? "bg-gray-300 border-gray-400"
+                       : "bg-white border-gray-200"
+                   }`}
+                  onClick={() => onSlotTopChange({ target: { value: slot } })}
+                >
                   {slot}
-                </label>
+                </button>
               </div>
             ))}
           </div>
-        )}
-        <div className="border-b-2 border-b-gray-300 mt-1"></div>
-      </div>
-    </div>
-  );
-};
-export const SlotBottomOptions = ({ slotBottomOption, onSlotBottomChange, isOpen, toggleDropdown }) => {
-  return (
-    <div className="border rounded-3xl bg-white">
-      <div className="options flex flex-col p-3 box-content">
-        <div className="flex justify-between">
-          <div>
-            <p className="font-bold text-sm">Slot Bottom</p>
-          </div>
-          <div>
-            <button onClick={toggleDropdown}>
-              {isOpen ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
+          <div className="w-full flex justify-end items-end">
+            <button
+              onClick={handleNextStep}
+              className="btn h-14 px-4 rounded-md  text-white"
+              style={{ background: "#f99d1b" }}
+            >
+              Next Step
             </button>
           </div>
         </div>
-
-        {isOpen && (
-          <div className="transition-all">
+      </div>
+    );
+  }
+);
+export const SlotBottomOptions = forwardRef(
+  ({ slotBottomOption, onSlotBottomChange }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-xl p-5 w-full h-screen flex items-center"
+      >
+        <div className="options flex flex-col h-full justify-center items-center w-full">
+          <div className="flex justify-center items-center mb-4 =">
+            <div>
+              <span>
+                Choose your{" "}
+                <p className="font-bold text-md inline-block">Slot Top:</p>{" "}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 gap-4 mb-4 w-full">
             {["Tube", "Channel", "Crown", "None"].map((slot) => (
-              <div key={slot} className="col py-2">
-                <input
-                  className="mr-2"
-                  type="radio"
-                  name="slotBottom"
-                  value={slot}
-                  checked={slotBottomOption === slot}
-                  onChange={onSlotBottomChange}
-                />
-                <label className="text-sm" htmlFor={slot}>
+              <div key={slot} className="py-2">
+                <button
+                  className={`w-full py-3 text-sm border-2 rounded-lg 
+                   ${
+                     slotBottomOption === slot
+                       ? "bg-gray-300 border-gray-400"
+                       : "bg-white border-gray-200"
+                   }`}
+                  onClick={() =>
+                    onSlotBottomChange({ target: { value: slot } })
+                  }
+                >
                   {slot}
-                </label>
+                </button>
               </div>
             ))}
           </div>
-        )}
-        <div className="border-b-2 border-b-gray-300 mt-1"></div>
+          <button
+            className="btn h-14 px-4 rounded-md  text-white"
+            style={{ background: "#f99d1b" }}
+          >
+            Next Step
+          </button>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
