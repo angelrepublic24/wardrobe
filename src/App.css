@@ -1,6 +1,16 @@
 button{
     border: 1px solid #f99d1b;
     color: #f99d1b !important;
+    border: 2px solid #f99d1b; /* Gris claro con efecto vidrio */
+    border-radius: 10px;
+    padding: 10px;
+    background-color: transparent;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+    font-size: 16px;
+    width: 100%;
+    color: #555;
 }
 
 button:hover{

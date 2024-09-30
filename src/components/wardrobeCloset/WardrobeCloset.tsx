@@ -3900,7 +3900,7 @@ export const WardrobeCloset = ({
       <Canvas
         className="border md:rounded-3xl bg-white w-full md:w-3/4"
         camera={{ position: cameraPosition, fov: 25 }}
-        style={{ height: "100%", background: "#f5f5f5" }}
+        style={{ height: "100%", background: "#363a46" }}
       >
         <CameraPositionLogger />
         <ambientLight intensity={0.8} />
