@@ -19,6 +19,6 @@ button:hover{
 }
 
 .button-selected {
-    background: #f99d1b !important; /* Color de fondo */
-    color: white !important; /* Color del texto */
+    background: #f99d1b !important;
+    color: white !important; 
 }

@@ -155,7 +155,7 @@ export const SlotTopOptions = forwardRef(
   }
 );
 export const SlotBottomOptions = forwardRef(
-  ({ slotBottomOption, onSlotBottomChange }, ref) => {
+  ({ slotBottomOption, onSlotBottomChange, handleNextStep }, ref) => {
     return (
       <div
         ref={ref}
@@ -177,7 +177,7 @@ export const SlotBottomOptions = forwardRef(
                   className={`w-full py-3 text-sm rounded-lg 
                    ${
                      slotBottomOption === slot
-                     ? ".button-selected"
+                     ? "button-selected"
                      : "bg-white"
                    }`}
                   onClick={() =>
@@ -185,6 +185,147 @@ export const SlotBottomOptions = forwardRef(
                   }
                 >
                   {slot}
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            className="btn h-14 px-4 rounded-md  "
+            onClick={handleNextStep}
+          >
+            Next Step
+          </button>
+        </div>
+      </div>
+    );
+  }
+);
+
+export const RoofOption = forwardRef(
+  ({ roofOption, onRoofOptionChange, handleNextStep }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
+      >
+        <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
+          <div className="flex justify-center items-center mb-4 =">
+            <div>
+              <span>
+                Choose your{" "}
+                <p className="font-bold text-md inline-block">Roof Option:</p>{" "}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-4 w-full">
+            {["Single Roof", "Double Roof"].map((roof) => (
+              <div key={roof} className="py-2">
+                <button
+                  className={`w-full py-3 text-sm rounded-lg 
+                   ${
+                    roofOption === roof
+                     ? "button-selected"
+                     : "bg-white"
+                   }`}
+                  onClick={() =>
+                    onRoofOptionChange({ target: { value: roof } })
+                  }
+                >
+                  {roof}
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            className="btn h-14 px-4 rounded-md  "
+            onClick={handleNextStep}
+          >
+            Next Step
+          </button>
+        </div>
+      </div>
+    );
+  }
+);
+
+export const LouversOption = forwardRef(
+  ({ louversOption, onLouverOptionChange, handleNextStep }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
+      >
+        <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
+          <div className="flex justify-center items-center mb-4 =">
+            <div>
+              <span>
+                Choose your{" "}
+                <p className="font-bold text-md inline-block">Louvers:</p>{" "}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-4 w-full">
+            {["Round", "1x3", "2x3", "None"].map((louver) => (
+              <div key={louver} className="py-2">
+                <button
+                  className={`w-full py-3 text-sm rounded-lg 
+                   ${
+                    louversOption === louver
+                     ? "button-selected"
+                     : "bg-white"
+                   }`}
+                  onClick={() =>
+                    onLouverOptionChange({ target: { value: louver } })
+                  }
+                >
+                  {louver}
+                </button>
+              </div>
+            ))}
+          </div>
+          <button
+            className="btn h-14 px-4 rounded-md  "
+            onClick={handleNextStep}
+          >
+            Next Step
+          </button>
+        </div>
+      </div>
+    );
+  }
+);
+
+export const LouverSizeOption = forwardRef(
+  ({ louverSizeOption, onLouverSizeOptionChange }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
+      >
+        <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
+          <div className="flex justify-center items-center mb-4 =">
+            <div>
+              <span>
+                Choose your{" "}
+                <p className="font-bold text-md inline-block">Louvers size:</p>{" "}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-4 w-full">
+            {["1 ft", "3/4 ft", "1/2 ft", "1/4 ft"].map((size) => (
+              <div key={size} className="py-2">
+                <button
+                  className={`w-full py-3 text-sm rounded-lg 
+                   ${
+                    louverSizeOption === size
+                     ? "button-selected"
+                     : "bg-white"
+                   }`}
+                  onClick={() =>
+                    onLouverSizeOptionChange({ target: { value: size } })
+                  }
+                >
+                  {size}
                 </button>
               </div>
             ))}
@@ -199,3 +340,5 @@ export const SlotBottomOptions = forwardRef(
     );
   }
 );
+
+
