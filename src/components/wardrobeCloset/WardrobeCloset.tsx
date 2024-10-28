@@ -1380,6 +1380,72 @@ if (
     }
   }
 
+  // Tube x Tube 
+  if (
+    sizeOption &&
+    lengthSideOption &&
+    slotTopOption === "Tube" &&
+    slotBottomOption === "Tube" &&
+    roofOption ==="Single Roof" &&
+    louversOption === "Round" &&
+    louverSizeOption === "1/4 ft"
+  ) {
+    for (let size = 2; size <= 20; size += 2) {
+      for (let length = 2; length <= 10; length += 2) {
+        const caseString = `${size} ft-${length} ft-Tube-Tube-Single Roof-Round-1/4 ft`;
+        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
+            newPath = `images/Louvers/Round/aQuarter/TubexTube/${size}x${length}.glb`; // Updated
+            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+            break;
+        }
+      }
+    }
+  }
+
+   // Tube x Channel 
+   if (
+    sizeOption &&
+    lengthSideOption &&
+    slotTopOption === "Tube" &&
+    slotBottomOption === "Channel" &&
+    roofOption ==="Single Roof" &&
+    louversOption === "Round" &&
+    louverSizeOption === "1/4 ft"
+  ) {
+    for (let size = 2; size <= 20; size += 2) {
+      for (let length = 2; length <= 10; length += 2) {
+        const caseString = `${size} ft-${length} ft-Tube-Channel-Single Roof-Round-1/4 ft`;
+        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
+            newPath = `images/Louvers/Round/aQuarter/TubexChannel/${size}x${length}.glb`; // Updated
+            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+            break;
+        }
+      }
+    }
+  }
+
+  // Tube x Crown 
+  if (
+    sizeOption &&
+    lengthSideOption &&
+    slotTopOption === "Tube" &&
+    slotBottomOption === "Crown" &&
+    roofOption ==="Single Roof" &&
+    louversOption === "Round" &&
+    louverSizeOption === "1/4 ft"
+  ) {
+    for (let size = 2; size <= 20; size += 2) {
+      for (let length = 2; length <= 10; length += 2) {
+        const caseString = `${size} ft-${length} ft-Tube-Crown-Single Roof-Round-1/4 ft`;
+        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
+            newPath = `images/Louvers/Round/aQuarter/TubexCrown/${size}x${length}.glb`; // Updated
+            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
+            break;
+        }
+      }
+    }
+  }
+
     setModelPath(newPath);
     setCameraPosition(newCameraPosition);
 
