@@ -144,44 +144,54 @@ export const WardrobeCloset = ({
 
     if (sizeOption && !lengthSideOption) {
       switch (sizeOption) {
+        case "1 ft":
         case "2 ft":
           newPath = "images/base/2ft.glb";
           newCameraPosition = [10, 15, 50];
           newControlsTarget.set(10, 5.5, 40);
           break;
+        case "3 ft":
         case "4 ft":
           newPath = "images/base/4ft.glb";
           newCameraPosition = [20, 20, 30];
           break;
+        case "5 ft":
         case "6 ft":
           newPath = "images/base/6ft.glb";
           newCameraPosition = [-25, 15, 50];
           newControlsTarget.set(10, 5.5, 40);
           break;
+        case "7 ft":
         case "8 ft":
           newPath = "images/base/8ft.glb";
           newCameraPosition = [25, 15, 100];
           break;
+          case "9 ft":
         case "10 ft":
           newPath = "images/base/10ft.glb";
           newCameraPosition = [50, 35, 90];
           break;
+        case "11 ft":
         case "12 ft":
           newPath = "images/base/12ft.glb";
           newCameraPosition = [60, 40, 100];
           break;
+        case "13 ft":
         case "14 ft":
           newPath = "images/base/14ft.glb";
           newCameraPosition = [70, 45, 110];
           break;
+          case "15 ft":
         case "16 ft":
           newPath = "images/base/16ft.glb";
           newCameraPosition = [80, 50, 120];
           break;
+          case "17 ft":
         case "18 ft":
           newPath = "images/base/18ft.glb";
           newCameraPosition = [90, 55, 130];
           break;
+          case "19 ft":
         case "20 ft":
           newPath = "images/base/20ft.glb";
           newCameraPosition = [100, 60, 140];
@@ -191,1260 +201,87 @@ export const WardrobeCloset = ({
       }
     }
 
-    if (
-      sizeOption &&
-      lengthSideOption
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft`;
+    if (sizeOption && lengthSideOption) {
+      // Convertimos los valores a números pares redondeando hacia arriba
+      const adjustedSize = Math.ceil(parseInt(sizeOption) / 2) * 2;
+      const adjustedLength = Math.ceil(parseInt(lengthSideOption) / 2) * 2;
     
-          if (caseString === `${sizeOption}-${lengthSideOption}`) {
-              newPath = `images/completSize/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
+      // Definimos el path usando los valores ajustados
+      newPath = `images/completSize/${adjustedSize}x${adjustedLength}.glb`;
+      newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
     }
 
     // Slot Top
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}`) {
-              newPath = `images/slotTop/Channel/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
+    if (sizeOption && lengthSideOption && slotTopOption) {
+      // Convertimos los valores a números pares redondeando hacia arriba
+      const adjustedSize = Math.ceil(parseInt(sizeOption) / 2) * 2;
+      const adjustedLength = Math.ceil(parseInt(lengthSideOption) / 2) * 2;
+      if(slotTopOption === 'None') {
+        newPath = `images/completSize/${adjustedSize}x${adjustedLength}.glb`;
+      }else{
+        newPath = `images/slotTop/${slotTopOption}/${adjustedSize}x${adjustedLength}.glb`;
+        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
       }
+          
     }
 
-    // Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}`) {
-              newPath = `images/slotTop/Tube/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
+
+
+ // ---------------Top x Bottom --------------------------------
+    if (sizeOption && lengthSideOption && slotTopOption && slotBottomOption) {
+      // Convertimos los valores a números pares redondeando hacia arriba
+      const adjustedSize = Math.ceil(parseInt(sizeOption) / 2) * 2;
+      const adjustedLength = Math.ceil(parseInt(lengthSideOption) / 2) * 2;
+      if (slotTopOption === 'None' && slotBottomOption === 'None') {
+        // Caso 1: Ambos son 'None'
+        newPath = `images/completSize/${adjustedSize}x${adjustedLength}.glb`;
+      } else if (slotTopOption !== 'None' && slotBottomOption === 'None') {
+        // Caso 2: slotTopOption es distinto de 'None' y slotBottomOption es 'None'
+        newPath = `images/slotTop/${slotTopOption}/${adjustedSize}x${adjustedLength}.glb`;
+      } else if (slotTopOption === 'None' && slotBottomOption !== 'None') {
+        // Caso 3: slotTopOption es 'None' y slotBottomOption es distinto de 'None'
+        newPath = `images/slotBottom/${slotBottomOption}/${adjustedSize}x${adjustedLength}.glb`;
+      } else {
+        // Caso 4: Ambos son distintos de 'None'
+        newPath = `images/slotTopAndBottom/${slotTopOption}x${slotBottomOption}/${adjustedSize}x${adjustedLength}.glb`;
+        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
       }
+          
     }
 
-    // Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Crown"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Crown`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}`) {
-              newPath = `images/slotTop/Crown/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-// ------------------------------------------------------------
-    // Slot Bottom
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "Channel"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-Channel`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotBottom/Channel/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-    // None x Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "Tube"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-Tube`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotBottom/Tube/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-    // None x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "Crown"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-Crown`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotBottom/Crown/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // ---------------Top x Bottom --------------------------------
-
-    // Crown x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Crown" &&
-      slotBottomOption === "Crown"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Crown-Crown`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/CrownxCrown/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Channel x Channel
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Channel"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Channel`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/ChannelxChannel/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Tube x Tube 
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "Tube"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube-Tube`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/TubexTube/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Channel x Tube
-
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Tube"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Tube`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/ChannelxTube/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Channel x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Crown"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Crown`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/ChannelxCrown/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-    // Crown x Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Crown" &&
-      slotBottomOption === "Tube"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Crown-Tube`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/CrownxTube/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Crown x Channel
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Crown" &&
-      slotBottomOption === "Channel"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Crown-Channel`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/CrownxChannel/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Tube x Channel 
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "Channel"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube-Channel`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/TubexChannel/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Tube x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "Crown"
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube-Crown`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}`) {
-              newPath = `images/slotTopAndBottom/TubexCrown/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
 
 // ---------------------------------------------------------------
 // Roof
+if (sizeOption && lengthSideOption && slotTopOption && slotBottomOption && roofOption) {
+  const adjustedSize = Math.ceil(parseInt(sizeOption) / 2) * 2;
+  const adjustedLength = Math.ceil(parseInt(lengthSideOption) / 2) * 2;
 
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Channel" &&
-      roofOption
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Channel-Single Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-              newPath = `images/Roof/singleRoof/ChannelxChannel/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Channel x Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Tube" &&
-      roofOption
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Tube-Single Roof`;
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-              newPath = `images/Roof/singleRoof/ChannelxTube/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-
-    // Channel x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Crown" &&
-      roofOption
-    ) {
-      for (let size = 2; size <= 20; size += 2) {
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Crown-Single Roof`;
-          if(caseString ===`${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`){
-              newPath = `images/Roof/singleRoof/ChannelxCrown/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-        }
-      }
-    }
-    // Tube x Crown
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Tube" &&
-  slotBottomOption === "Crown" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size}-${length}-Tube-Crown-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/TubexCrown/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
+    newPath = `images/Roof/${roofOption}/${slotTopOption}x${slotBottomOption}/${adjustedSize}x${adjustedLength}.glb`;
+    newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
 }
-
-// Tube x Channel
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Tube" &&
-  slotBottomOption === "Channel" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size}-${length}-Tube-Channel-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/TubexChannel/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// Tube x Tube
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Tube" &&
-  slotBottomOption === "Tube" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-Tube-Tube-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/TubexTube/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// Crown x Tube
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Crown" &&
-  slotBottomOption === "Tube" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-Crown-Tube-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/CrownxTube/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// Crown x Channel
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Crown" &&
-  slotBottomOption === "Channel" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-Crown-Channel-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/CrownxChannel/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// Crown x Crown
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Crown" &&
-  slotBottomOption === "Crown" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-Crown-Crown-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/CrownxCrown/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// Crown x None
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Crown" &&
-  slotBottomOption === "None" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-Crown-None-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/CrownxNone/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// Tube x None
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Tube" &&
-  slotBottomOption === "None" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-Tube-None-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/TubexNone/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// Channel x None
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "Channel" &&
-  slotBottomOption === "None" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-Channel-None-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/ChannelxNone/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// None x Channel
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "None" &&
-  slotBottomOption === "Channel" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-None-Channel-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/NonexChannel/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// None x Tube
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "None" &&
-  slotBottomOption === "Tube" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-None-Tube-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/NonexTube/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-
-// None x Crown
-if (
-  sizeOption &&
-  lengthSideOption &&
-  slotTopOption === "None" &&
-  slotBottomOption === "Crown" &&
-  roofOption
-) {
-  // Loop through sizes 2 ft to 20 ft
-  for (let size = 2; size <= 20; size += 2) {
-    // Loop through lengths 2 ft to 10 ft
-    for (let length = 2; length <= 10; length += 2) {
-      const caseString = `${size} ft-${length} ft-None-Crown-Single Roof`;
-      if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-        newPath = `images/Roof/singleRoof/NonexCrown/${size}x${length}.glb`; // Updated
-        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-      }
-    }
-  }
-}
-    // ---------------------------------------------------------------------------------
-
-    // ------------ Double Roof -----------------
-
-    // None x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "Crown" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-Crown-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-None-Crown-Double Roof`:
-                newPath = `images/Roof/doubleRoof/NonexCrown/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // None x None
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "None" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-None-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-None-None-Double Roof`:
-                newPath = `images/Roof/doubleRoof/NonexNone/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // None x Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "Tube" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-Tube-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-None-Tube-Double Roof`:
-                newPath = `images/Roof/doubleRoof/NonexTube/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // None x Channel
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "Channel" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-Channel-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-None-Channel-Double Roof`:
-                newPath = `images/Roof/doubleRoof/NonexChannel/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Channel x Channel
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Channel" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Channel-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Channel-Channel-Double Roof`:
-                newPath = `images/Roof/doubleRoof/ChannelxChannel/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Channel x Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Tube" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Tube-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Channel-Tube-Double Roof`:
-                newPath = `images/Roof/doubleRoof/ChannelxTube/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Channel x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Crown" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Crown-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Channel-Crown-Double Roof`:
-                newPath = `images/Roof/doubleRoof/ChannelxCrown/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Tube x Crown
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "Crown" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube-Crown-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Tube-Crown-Double Roof`:
-                newPath = `images/Roof/doubleRoof/TubexCrown/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Tube x Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "Tube" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube-Tube-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Tube-Tube-Double Roof`:
-                newPath = `images/Roof/doubleRoof/TubexTube/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Tube x Channel
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "Channel" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube-Channel-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Tube-Channel-Double Roof`:
-                newPath = `images/Roof/doubleRoof/TubexChannel/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Tube x None
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "None" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Tube-None-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Tube-None-Double Roof`:
-                newPath = `images/Roof/doubleRoof/TubexNone/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Tube x None
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "Tube" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-Tube-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-None-Tube-Double Roof`:
-                newPath = `images/Roof/doubleRoof/NonexTube/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Tube x None
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "None" &&
-      slotBottomOption === "None" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-None-None-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-None-None-Double Roof`:
-                newPath = `images/Roof/doubleRoof/NonexNone/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Channel x Channel
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Channel" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Channel-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Channel-Channel-Double Roof`:
-                newPath = `images/Roof/doubleRoof/ChannelxChannel/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-    
-    // Channel x Tube
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Channel" &&
-      slotBottomOption === "Tube" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          const caseString = `${size} ft-${length} ft-Channel-Tube-Double Roof`;
-    
-          if (caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`) {
-            switch (caseString) {
-              case `${size} ft-${length} ft-Channel-Tube-Double Roof`:
-                newPath = `images/Roof/doubleRoof/ChannelxTube/${size}x${length}.glb`; // Updated
-                newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-                break;
-            }
-          }
-        }
-      }
-    }
-
-    // Tube x Channel
-    if (
-      sizeOption &&
-      lengthSideOption &&
-      slotTopOption === "Tube" &&
-      slotBottomOption === "Channel" &&
-      roofOption
-    ) {
-      // Loop through sizes 2 ft to 20 ft
-      for (let size = 2; size <= 20; size += 2) {
-        // Loop through lengths 2 ft to 10 ft
-        for (let length = 2; length <= 10; length += 2) {
-          if(`${size} ft-${length} ft-Tube-Channel-Double Roof`=== `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}`){
-            const caseString = `${size} ft-${length} ft-Tube-Channel-Double Roof`;
-    
-          switch (caseString) {
-            case `${size} ft-${length} ft-Tube-Channel-Double Roof`:
-              newPath = `images/Roof/doubleRoof/TubexChannel/${size}x${length}.glb`; // Updated
-              newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-              break;
-          }
-          }
-          
-        }
-      }
-    }
 
 // --------------------------------------------------------- 
     // Louvers
-   // Channel x Channel x 1/4
-   if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Channel" &&
-    slotBottomOption === "Channel" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    // Loop through sizes 2 ft to 20 ft
-    for (let size = 2; size <= 20; size += 2) {
-      // Loop through lengths 2 ft to 10 ft
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Channel-Channel-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/ChannelxChannel/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
-    }
-  }
 
-  // Channel x Tube
-  if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Channel" &&
-    slotBottomOption === "Tube" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    // Loop through sizes 2 ft to 20 ft
-    for (let size = 2; size <= 20; size += 2) {
-      // Loop through lengths 2 ft to 10 ft
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Channel-Tube-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/ChannelxTube/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
+    // 1 / 4
+    if (sizeOption && lengthSideOption && slotTopOption && slotBottomOption && roofOption && louversOption && louverSizeOption === '1/4 ft') {
+      const adjustedSize = Math.ceil(parseInt(sizeOption) / 2) * 2;
+      const adjustedLength = Math.ceil(parseInt(lengthSideOption) / 2) * 2;
+    
+        newPath = `images/Louvers/${louversOption}/aQuarter/${slotTopOption}x${slotBottomOption}/${adjustedSize}x${adjustedLength}.glb`;
+        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
     }
-  }
 
-  // Channe x Crown
-  if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Channel" &&
-    slotBottomOption === "Crown" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    // Loop through sizes 2 ft to 20 ft
-    for (let size = 2; size <= 20; size += 2) {
-      // Loop through lengths 2 ft to 10 ft
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Channel-Crown-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/ChannelxCrown/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
+  // 1 / 2 
+    if (sizeOption && lengthSideOption && slotTopOption && slotBottomOption && roofOption && louversOption && louverSizeOption === '1/2 ft') {
+      const adjustedSize = Math.ceil(parseInt(sizeOption) / 2) * 2;
+      const adjustedLength = Math.ceil(parseInt(lengthSideOption) / 2) * 2;
+    
+        newPath = `images/Louvers/${louversOption}/half/${slotTopOption}x${slotBottomOption}/${adjustedSize}x${adjustedLength}.glb`;
+        newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
     }
-  }
 
-  // Crown x Crown
-  if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Crown" &&
-    slotBottomOption === "Crown" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    for (let size = 2; size <= 20; size += 2) {
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Crown-Crown-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/CrownxCrown/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
-    }
-  }
-
-  // Crown x Tube
-  if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Crown" &&
-    slotBottomOption === "Tube" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    for (let size = 2; size <= 20; size += 2) {
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Crown-Tube-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/CrownxTube/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
-    }
-  }
-
-  //  Crown x Channel
-
-  if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Crown" &&
-    slotBottomOption === "Channel" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    for (let size = 2; size <= 20; size += 2) {
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Crown-Channel-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/CrownxChannel/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
-    }
-  }
-
-  // Tube x Tube 
-  if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Tube" &&
-    slotBottomOption === "Tube" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    for (let size = 2; size <= 20; size += 2) {
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Tube-Tube-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/TubexTube/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
-    }
-  }
-
-   // Tube x Channel 
-   if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Tube" &&
-    slotBottomOption === "Channel" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    for (let size = 2; size <= 20; size += 2) {
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Tube-Channel-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/TubexChannel/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
-    }
-  }
-
-  // Tube x Crown 
-  if (
-    sizeOption &&
-    lengthSideOption &&
-    slotTopOption === "Tube" &&
-    slotBottomOption === "Crown" &&
-    roofOption ==="Single Roof" &&
-    louversOption === "Round" &&
-    louverSizeOption === "1/4 ft"
-  ) {
-    for (let size = 2; size <= 20; size += 2) {
-      for (let length = 2; length <= 10; length += 2) {
-        const caseString = `${size} ft-${length} ft-Tube-Crown-Single Roof-Round-1/4 ft`;
-        if(caseString === `${sizeOption}-${lengthSideOption}-${slotTopOption}-${slotBottomOption}-${roofOption}-${louversOption}-${louverSizeOption}`){
-            newPath = `images/Louvers/Round/aQuarter/TubexCrown/${size}x${length}.glb`; // Updated
-            newRotation = { x: Math.PI / 3, y: Math.PI / 2, z: 5.2 };
-            break;
-        }
-      }
-    }
-  }
+ 
 
     setModelPath(newPath);
     setCameraPosition(newCameraPosition);

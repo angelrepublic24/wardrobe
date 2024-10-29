@@ -9,44 +9,26 @@ export const BaseSizeOption = forwardRef(
         className="bg-white rounded-xl p-5 w-full md:h-screen flex items-center"
       >
         <div className="options flex flex-col h-full justify-center items-center w-full">
-          <div className="flex justify-center items-center mb-4 =">
+          <div className="flex justify-center items-center mb-4">
             <div>
               <p className="font-bold text-lg">Pick your base size</p>
             </div>
           </div>
-          <div className="grid grid-cols-5 gap-4 mb-4 w-full">
-            {[
-              "20 ft",
-              "18 ft",
-              "16 ft",
-              "14 ft",
-              "12 ft",
-              "10 ft",
-              "8 ft",
-              "6 ft",
-              "4 ft",
-              "2 ft",
-            ].map((size) => (
-              <div key={size} className="py-2">
-                <button
-                  className={`w-full py-3 text-sm rounded-lg 
-                    ${
-                      sizeOption === size
-                      ? "button-selected" // Estilo cuando está seleccionado
-                      : "bg-white" // 
-                      
-                    }`}
-                  onClick={() => onSizeChange({ target: { value: size } })}
-                >
-                  {size}
-                </button>
-              </div>
-            ))}
+          <div className="w-full mb-4 flex justify-center">
+            <input
+              type="number"
+              min="1"
+              max="20"
+              value={sizeOption.replace(" ft", "")} // Remove " ft" for the input value
+              onChange={(e) => onSizeChange({ target: { value: `${e.target.value} ft` } })}
+              className="w-full py-2 text-sm rounded-lg text-center border border-gray-300"
+              placeholder="Enter size"
+            />
           </div>
           <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
-              className="btn h-14 px-4 rounded-md "
+              className="btn h-14 px-4 rounded-md"
             >
               Next Step
             </button>
@@ -64,7 +46,7 @@ export const LengthSideOption = forwardRef(
         className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
       >
         <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
-          <div className="flex justify-center items-center mb-4 =">
+          <div className="flex justify-center items-center mb-4">
             <div>
               <span>
                 Choose your{" "}
@@ -73,30 +55,21 @@ export const LengthSideOption = forwardRef(
             </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-4 mb-4 w-full">
-            {["10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
-              <div key={size} className="py-2">
-                <button
-                  className={`w-full py-3 text-sm rounded-lg 
-                    ${
-                      lengthSideOption === size
-                      ? "button-selected" // Estilo cuando está seleccionado
-                      : "bg-white" // 
-                    }`}
-                  onClick={() =>
-                    onLengthSizeChange({ target: { value: size } })
-                  }
-                >
-                  {size}
-                </button>
-              </div>
-            ))}
+          <div className="w-full mb-4 flex justify-center">
+            <input
+              type="number"
+              min="1"
+              max="10"
+              value={lengthSideOption.replace(" ft", "")} // Remove " ft" for the input value
+              onChange={(e) => onLengthSizeChange({ target: { value: `${e.target.value} ft` } })}
+              className="w-full py-2 text-sm rounded-lg text-center border border-gray-300"
+              placeholder="Enter length"
+            />
           </div>
           <div className="w-full flex justify-center md:justify-end items-end">
             <button
               onClick={handleNextStep}
               className="btn h-14 px-4 rounded-md"
-
             >
               Next Step
             </button>
@@ -106,6 +79,112 @@ export const LengthSideOption = forwardRef(
     );
   }
 );
+
+// export const BaseSizeOption = forwardRef(
+//   ({ sizeOption, onSizeChange, handleNextStep }, ref) => {
+//     return (
+//       <div
+//         ref={ref}
+//         className="bg-white rounded-xl p-5 w-full md:h-screen flex items-center"
+//       >
+//         <div className="options flex flex-col h-full justify-center items-center w-full">
+//           <div className="flex justify-center items-center mb-4 =">
+//             <div>
+//               <p className="font-bold text-lg">Pick your base size</p>
+//             </div>
+//           </div>
+//           <div className="grid grid-cols-5 gap-4 mb-4 w-full">
+//             {[
+//               "20 ft",
+//               "18 ft",
+//               "16 ft",
+//               "14 ft",
+//               "12 ft",
+//               "10 ft",
+//               "8 ft",
+//               "6 ft",
+//               "4 ft",
+//               "2 ft",
+//             ].map((size) => (
+//               <div key={size} className="py-2">
+//                 <button
+//                   className={`w-full py-3 text-sm rounded-lg 
+//                     ${
+//                       sizeOption === size
+//                       ? "button-selected" // Estilo cuando está seleccionado
+//                       : "bg-white" // 
+                      
+//                     }`}
+//                   onClick={() => onSizeChange({ target: { value: size } })}
+//                 >
+//                   {size}
+//                 </button>
+//               </div>
+//             ))}
+//           </div>
+//           <div className="w-full flex justify-center md:justify-end items-end">
+//             <button
+//               onClick={handleNextStep}
+//               className="btn h-14 px-4 rounded-md "
+//             >
+//               Next Step
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+// );
+// export const LengthSideOption = forwardRef(
+//   ({ lengthSideOption, onLengthSizeChange, handleNextStep }, ref) => {
+//     return (
+//       <div
+//         ref={ref}
+//         className="bg-white rounded-xl p-5 w-full h-screen flex md:items-center"
+//       >
+//         <div className="options flex flex-col h-[40%] md:h-full justify-center items-center w-full">
+//           <div className="flex justify-center items-center mb-4 =">
+//             <div>
+//               <span>
+//                 Choose your{" "}
+//                 <p className="font-bold text-md inline-block">Length Side:</p>{" "}
+//               </span>
+//             </div>
+//           </div>
+
+//           <div className="grid grid-cols-5 gap-4 mb-4 w-full">
+//             {["10 ft", "8 ft", "6 ft", "4 ft", "2 ft"].map((size) => (
+//               <div key={size} className="py-2">
+//                 <button
+//                   className={`w-full py-3 text-sm rounded-lg 
+//                     ${
+//                       lengthSideOption === size
+//                       ? "button-selected" // Estilo cuando está seleccionado
+//                       : "bg-white" // 
+//                     }`}
+//                   onClick={() =>
+//                     onLengthSizeChange({ target: { value: size } })
+//                   }
+//                 >
+//                   {size}
+//                 </button>
+//               </div>
+//             ))}
+//           </div>
+//           <div className="w-full flex justify-center md:justify-end items-end">
+//             <button
+//               onClick={handleNextStep}
+//               className="btn h-14 px-4 rounded-md"
+
+//             >
+//               Next Step
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     );
+//   }
+// );
 
 export const SlotTopOptions = forwardRef(
   ({ slotTopOption, onSlotTopChange, handleNextStep }, ref) => {
